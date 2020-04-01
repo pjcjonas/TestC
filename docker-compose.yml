@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  documentmanagerapi:
+    image: ${DOCKER_REGISTRY-}documentmanagerapi
+    build:
+      context: .\DocumentManagerApi
+      dockerfile: Dockerfile
