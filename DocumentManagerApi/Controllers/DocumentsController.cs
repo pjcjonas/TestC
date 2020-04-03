@@ -12,6 +12,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
@@ -21,6 +22,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace DocumentManagerApi.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class DocumentsController : ApiController
     {
         private DocumentsContext db = new DocumentsContext();
@@ -103,7 +105,7 @@ namespace DocumentManagerApi.Controllers
                 db.Documents.Add(document);
                 db.SaveChanges();
 
-                return new HttpResponseMessage { Content = new StringContent(document.DocumentId.ToString()) };
+                return new HttpResponseMessage { Content = new StringContent(document.DocumentId.ToString())};
             }
             catch (Exception e) {
                 return new HttpResponseMessage { Content = new StringContent(e.Message) };
@@ -144,7 +146,6 @@ namespace DocumentManagerApi.Controllers
             CloudBlockBlob cloudBlockBlob = container.GetBlockBlobReference(blobName);
             return cloudBlockBlob;
         }
-
         
     }
 }
